@@ -1,11 +1,8 @@
 package com.workout.tracker.service;
 
 import com.workout.tracker.model.User;
-import com.workout.tracker.model.WorkoutDay;
 import com.workout.tracker.repository.UserRepository;
-import com.workout.tracker.repository.WorkoutDayRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 
 // Marks this class as a Service — Spring will manage it as a bean.
@@ -31,14 +28,14 @@ public class UserService {
     }
 
     // Deletes a user by its ID.
-    public void deleteUser(Long userId) {
-        userRepository.deleteById(userId);
+    public void deleteUser(Long id) {
+        userRepository.deleteById(id);
     }
 
     // Updates a user by its ID.
-    public User updateUser(Long userId, User updatedUser) {
+    public User updateUser(Long id, User updatedUser) {
 
-        User existingUser = userRepository.findById(userId)
+        User existingUser = userRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("User not found"));
 
         existingUser.setUsername(updatedUser.getUsername());
