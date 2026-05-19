@@ -31,7 +31,7 @@ public class UserController {
     // PUT /api/exercises/{id} — updates an existing user
     @PutMapping("/{id}")
     public User updateUser(@PathVariable Long id, @RequestBody User user) {
-        user.setid(id);
+        user.setId(id);
         return userService.updateUser(id, user);
     }
 

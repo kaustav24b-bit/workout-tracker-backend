@@ -24,7 +24,12 @@ public class UserService {
 
     // Saves a new user to the database.
     public User createUser(User user) {
-        return userRepository.save(user);
+        // First save to generate the id
+        User saved = userRepository.save(user);
+        // Then compute and set the token using id + username
+        saved.setUserToken(saved.getId() + "_" + saved.getUsername());
+        // Save again with the token
+        return userRepository.save(saved);
     }
 
     // Deletes a user by its ID.

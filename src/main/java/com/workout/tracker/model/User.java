@@ -8,19 +8,19 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(nullable = false)
+    @Column(nullable = false, unique = true)
     private String username;
 
     @Column(nullable = false)
     private String userToken;
 
     // Getters and setters
-    public Long getUserId(){return id;}
-    public void setid(Long userId){this.id = id;}
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getUsername(){return username;}
-    public void setUsername(String username) {this.username = username;}
+    public String getUsername() { return username; }
+    public void setUsername(String username) { this.username = username; }
 
-    public String getUserToken(){return userToken;}
-    public void setUserToken(String userToken) {this.userToken = userToken;}
+    public String getUserToken() { return userToken; }
+    public void setUserToken(String userToken) { this.userToken = userToken; }
 }
