@@ -14,6 +14,15 @@ public class WorkoutDayService {
     // Spring automatically injects the repository — no need to create it manually.
     private final WorkoutDayRepository workoutDayRepository;
 
+    public WorkoutDay getOrCreateWorkoutDay(WorkoutDay workoutDay) {
+        // If a workout day already exists for this date, return it
+        List<WorkoutDay> existing = workoutDayRepository.findByDate(workoutDay.getDate());
+        if (!existing.isEmpty()) {
+            return existing.get(0);
+        }
+        return workoutDayRepository.save(workoutDay);
+    }
+
     public WorkoutDayService(WorkoutDayRepository workoutDayRepository) {
         this.workoutDayRepository = workoutDayRepository;
     }

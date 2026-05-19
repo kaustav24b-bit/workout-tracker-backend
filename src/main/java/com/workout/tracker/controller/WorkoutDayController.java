@@ -33,7 +33,7 @@ public class WorkoutDayController {
     // POST /api/workout-days — creates a new workout day
     @PostMapping
     public WorkoutDay createWorkoutDay(@RequestBody WorkoutDay workoutDay) {
-        return workoutDayService.createWorkoutDay(workoutDay);
+        return workoutDayService.getOrCreateWorkoutDay(workoutDay);
     }
 
     // DELETE /api/workout-days/{id} — deletes a workout day by ID
