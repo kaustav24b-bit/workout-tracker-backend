@@ -9,7 +9,6 @@ import java.util.List;
 // REST controller for Exercise endpoints.
 @RestController
 @RequestMapping("/api/exercises")
-@CrossOrigin(origins = "*")
 public class ExerciseController {
 
     private final ExerciseService exerciseService;

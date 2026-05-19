@@ -10,7 +10,6 @@ import java.util.List;
 // @CrossOrigin allows your React frontend to call this API (CORS policy).
 @RestController
 @RequestMapping("/api/workout-days")
-@CrossOrigin(origins = "*")
 public class WorkoutDayController {
 
     private final WorkoutDayService workoutDayService;
