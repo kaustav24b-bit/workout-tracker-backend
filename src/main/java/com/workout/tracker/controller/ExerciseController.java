@@ -1,5 +1,6 @@
 package com.workout.tracker.controller;
 
+import com.workout.tracker.dto.StatPoint;
 import com.workout.tracker.model.Exercise;
 import com.workout.tracker.model.WorkoutDay;
 import com.workout.tracker.service.ExerciseService;
@@ -40,5 +41,14 @@ public class ExerciseController {
     @DeleteMapping("/{id}")
     public void deleteExercise(@PathVariable Long id) {
         exerciseService.deleteExercise(id);
+    }
+
+    // GET /api/exercises/stats?name=Bench+Press&userId=1
+    @GetMapping("/stats")
+    public List<StatPoint> getStats(
+            @RequestParam String name,
+            @RequestParam Long userId
+    ) {
+        return exerciseService.getStatsForExercise(name, userId);
     }
 }

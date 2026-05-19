@@ -1,9 +1,14 @@
 package com.workout.tracker.service;
 
+import com.workout.tracker.dto.StatPoint;
 import com.workout.tracker.model.Exercise;
 import com.workout.tracker.repository.ExerciseRepository;
 import org.springframework.stereotype.Service;
+
+import java.time.LocalDate;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 // Marks this class as a Service — Spring will manage it as a bean.
 // This is where business logic for Exercise lives.
@@ -35,5 +40,24 @@ public class ExerciseService {
     // Deletes an exercise by its ID.
     public void deleteExercise(Long id) {
         exerciseRepository.deleteById(id);
+    }
+
+    public List<StatPoint> getStatsForExercise(String name, Long userId) {
+        // Only fetch last 2 months of data
+        LocalDate startDate = LocalDate.now().minusMonths(2);
+        List<Exercise> exercises = exerciseRepository.findByNameAndUserIdSince(name, userId, startDate);
+
+        // Group by date and sum up reps * weight for each date
+        Map<LocalDate, Double> totals = new LinkedHashMap<>();
+        for (Exercise e : exercises) {
+            LocalDate date = e.getWorkoutDay().getDate();
+            double contribution = e.getReps() * e.getWeight();
+            totals.merge(date, contribution, Double::sum);
+        }
+
+        // Convert map to list of StatPoints
+        return totals.entrySet().stream()
+                .map(entry -> new StatPoint(entry.getKey(), entry.getValue()))
+                .collect(java.util.stream.Collectors.toList());
     }
 }
