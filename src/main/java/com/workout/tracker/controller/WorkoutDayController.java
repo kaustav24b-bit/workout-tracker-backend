@@ -3,11 +3,8 @@ package com.workout.tracker.controller;
 import com.workout.tracker.model.WorkoutDay;
 import com.workout.tracker.service.WorkoutDayService;
 import org.springframework.web.bind.annotation.*;
-import java.time.LocalDate;
 import java.util.List;
 
-// Marks this as a REST controller — all methods return JSON automatically.
-// @CrossOrigin allows your React frontend to call this API (CORS policy).
 @RestController
 @RequestMapping("/api/workout-days")
 public class WorkoutDayController {
@@ -24,13 +21,7 @@ public class WorkoutDayController {
         return workoutDayService.getAllWorkoutDays();
     }
 
-    // GET /api/workout-days/by-date?date=2026-05-17 — returns workout days for a specific date
-    @GetMapping("/by-date")
-    public List<WorkoutDay> getByDate(@RequestParam LocalDate date) {
-        return workoutDayService.getWorkoutDaysByDate(date);
-    }
-
-    // POST /api/workout-days — creates a new workout day
+    // POST /api/workout-days — gets or creates a workout day for a specific date and user
     @PostMapping
     public WorkoutDay createWorkoutDay(@RequestBody WorkoutDay workoutDay) {
         return workoutDayService.getOrCreateWorkoutDay(workoutDay);

@@ -13,5 +13,7 @@ public interface WorkoutDayRepository extends JpaRepository<WorkoutDay, Long> {
 
     // Custom query method — Spring reads the method name and generates the SQL automatically.
     // This translates to: SELECT * FROM workout_day WHERE date = ?
-    List<WorkoutDay> findByDate(LocalDate date);
+    // Fetch workout days for a specific date AND user
+    List<WorkoutDay> findByDateAndUserId(LocalDate date, Long userId);
+
 }

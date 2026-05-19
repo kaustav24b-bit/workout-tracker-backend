@@ -4,6 +4,5 @@ import com.workout.tracker.model.ExerciseName;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface ExerciseNameRepository extends JpaRepository<ExerciseName, Long> {
-    // Check if an exercise name already exists (case-insensitive)
     boolean existsByNameIgnoreCase(String name);
 }

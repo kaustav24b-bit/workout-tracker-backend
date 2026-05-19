@@ -3,25 +3,12 @@ package com.workout.tracker.service;
 import com.workout.tracker.model.WorkoutDay;
 import com.workout.tracker.repository.WorkoutDayRepository;
 import org.springframework.stereotype.Service;
-import java.time.LocalDate;
 import java.util.List;
 
-// Marks this class as a Service — Spring will manage it as a bean.
-// This is where business logic for WorkoutDay lives.
 @Service
 public class WorkoutDayService {
 
-    // Spring automatically injects the repository — no need to create it manually.
     private final WorkoutDayRepository workoutDayRepository;
-
-    public WorkoutDay getOrCreateWorkoutDay(WorkoutDay workoutDay) {
-        // If a workout day already exists for this date, return it
-        List<WorkoutDay> existing = workoutDayRepository.findByDate(workoutDay.getDate());
-        if (!existing.isEmpty()) {
-            return existing.get(0);
-        }
-        return workoutDayRepository.save(workoutDay);
-    }
 
     public WorkoutDayService(WorkoutDayRepository workoutDayRepository) {
         this.workoutDayRepository = workoutDayRepository;
@@ -32,13 +19,15 @@ public class WorkoutDayService {
         return workoutDayRepository.findAll();
     }
 
-    // Finds workout days by a specific date.
-    public List<WorkoutDay> getWorkoutDaysByDate(LocalDate date) {
-        return workoutDayRepository.findByDate(date);
-    }
-
-    // Saves a new workout day to the database.
-    public WorkoutDay createWorkoutDay(WorkoutDay workoutDay) {
+    // Gets existing workout day for this date+user, or creates a new one.
+    public WorkoutDay getOrCreateWorkoutDay(WorkoutDay workoutDay) {
+        List<WorkoutDay> existing = workoutDayRepository.findByDateAndUserId(
+                workoutDay.getDate(),
+                workoutDay.getUser().getId()
+        );
+        if (!existing.isEmpty()) {
+            return existing.get(0);
+        }
         return workoutDayRepository.save(workoutDay);
     }
 

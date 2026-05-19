@@ -2,8 +2,6 @@ package com.workout.tracker.model;
 
 import jakarta.persistence.*;
 
-// Stores the list of exercise names available in the workout dropdown.
-// This is separate from Exercise which stores actual workout data.
 @Entity
 @Table(name = "exercise_name")
 public class ExerciseName {
