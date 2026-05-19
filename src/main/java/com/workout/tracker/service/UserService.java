@@ -24,6 +24,8 @@ public class UserService {
 
     // Saves a new user to the database.
     public User createUser(User user) {
+        // Set a temporary token so nullable = false constraint is satisfied
+        user.setUserToken("temp");
         // First save to generate the id
         User saved = userRepository.save(user);
         // Then compute and set the token using id + username
