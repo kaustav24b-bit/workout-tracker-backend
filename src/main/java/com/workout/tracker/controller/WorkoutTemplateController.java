@@ -1,6 +1,7 @@
 package com.workout.tracker.controller;
 
 import com.workout.tracker.dto.TemplateRequest;
+import com.workout.tracker.model.TemplateExercise;
 import com.workout.tracker.model.WorkoutTemplate;
 import com.workout.tracker.model.User;
 import com.workout.tracker.service.WorkoutTemplateService;
@@ -48,6 +49,12 @@ public class WorkoutTemplateController {
 
         // Pass the template and exercise names to the service
         return workoutTemplateService.createTemplate(template, request.getExerciseNames());
+    }
+
+    // GET /api/templates/{id}/exercises — returns all exercises for a template
+    @GetMapping("/{id}/exercises")
+    public List<TemplateExercise> getTemplateExercises(@PathVariable Long id) {
+        return workoutTemplateService.getTemplateExercises(id);
     }
 
     // DELETE /api/templates/{id}

@@ -26,6 +26,11 @@ public class WorkoutTemplateService {
         workoutTemplateRepository.deleteById(id);
     }
 
+    // Returns all exercises belonging to a specific template
+    public List<TemplateExercise> getTemplateExercises(Long templateId) {
+        return templateExerciseRepository.findByWorkoutTemplateId(templateId);
+    }
+
     public WorkoutTemplate createTemplate(WorkoutTemplate template, List<String> exerciseNames) {
         // Step 1: Save the template first to generate its id
         WorkoutTemplate saved = workoutTemplateRepository.save(template);
