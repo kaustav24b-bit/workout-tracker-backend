@@ -63,4 +63,22 @@ public class WorkoutTemplateController {
     public void deleteTemplate(@PathVariable Long id) {
         workoutTemplateService.deleteTemplate(id);
     }
+
+    // PUT /api/templates/{id} — update template name
+    @PutMapping("/{id}")
+    public WorkoutTemplate updateTemplateName(@PathVariable Long id, @RequestBody TemplateRequest request) {
+        return workoutTemplateService.updateTemplateName(id, request.getName());
+    }
+
+    // POST /api/templates/{id}/exercises — add exercise to template
+    @PostMapping("/{id}/exercises")
+    public TemplateExercise addExercise(@PathVariable Long id, @RequestBody TemplateRequest request) {
+        return workoutTemplateService.addExerciseToTemplate(id, request.getName());
+    }
+
+    // DELETE /api/templates/exercises/{exerciseId} — remove exercise from template
+    @DeleteMapping("/exercises/{exerciseId}")
+    public void removeExercise(@PathVariable Long exerciseId) {
+        workoutTemplateService.removeExerciseFromTemplate(exerciseId);
+    }
 }

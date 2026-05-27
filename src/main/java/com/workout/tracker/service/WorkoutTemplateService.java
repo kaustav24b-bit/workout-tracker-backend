@@ -51,4 +51,27 @@ public class WorkoutTemplateService {
         return saved;
     }
 
+    // Update template name
+    public WorkoutTemplate updateTemplateName(Long id, String name) {
+        WorkoutTemplate existing = workoutTemplateRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Template not found"));
+        existing.setName(name);
+        return workoutTemplateRepository.save(existing);
+    }
+
+    // Add an exercise to an existing template
+    public TemplateExercise addExerciseToTemplate(Long templateId, String exerciseName) {
+        WorkoutTemplate template = workoutTemplateRepository.findById(templateId)
+                .orElseThrow(() -> new RuntimeException("Template not found"));
+        TemplateExercise te = new TemplateExercise();
+        te.setName(exerciseName);
+        te.setWorkoutTemplate(template);
+        return templateExerciseRepository.save(te);
+    }
+
+    // Remove an exercise from a template
+    public void removeExerciseFromTemplate(Long exerciseId) {
+        templateExerciseRepository.deleteById(exerciseId);
+    }
+
 }
