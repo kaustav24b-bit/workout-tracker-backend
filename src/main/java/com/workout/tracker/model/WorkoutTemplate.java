@@ -5,7 +5,8 @@ import jakarta.persistence.*;
 import java.time.LocalDate;
 
 @Entity
-@Table(name = "workout_template")
+@Table(name = "workout_template", uniqueConstraints = {
+        @UniqueConstraint(columnNames = {"name", "user_id"})})
 public class WorkoutTemplate {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
