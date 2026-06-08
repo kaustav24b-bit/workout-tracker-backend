@@ -9,7 +9,7 @@ import java.time.LocalDate;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
-
+import com.workout.tracker.dto.LastSessionSummary;
 // Marks this class as a Service — Spring will manage it as a bean.
 // This is where business logic for Exercise lives.
 @Service
@@ -59,5 +59,25 @@ public class ExerciseService {
         return totals.entrySet().stream()
                 .map(entry -> new StatPoint(entry.getKey(), entry.getValue()))
                 .collect(java.util.stream.Collectors.toList());
+    }
+
+    public LastSessionSummary getLastSessionSummary(String name, Long userId) {
+        List<Exercise> exercises = exerciseRepository.findLastSessionExercises(name, userId);
+
+        if (exercises.isEmpty()) return null;
+
+        // Find min and max weight from last session
+        double minWeight = exercises.stream()
+                .mapToDouble(Exercise::getWeight)
+                .min()
+                .orElse(0);
+        double maxWeight = exercises.stream()
+                .mapToDouble(Exercise::getWeight)
+                .max()
+                .orElse(0);
+
+        LocalDate date = exercises.get(0).getWorkoutDay().getDate();
+
+        return new LastSessionSummary(date, minWeight, maxWeight);
     }
 }

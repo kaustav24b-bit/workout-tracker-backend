@@ -2,6 +2,7 @@ package com.workout.tracker.model;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "workout_day")
@@ -22,6 +23,10 @@ public class WorkoutDay {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
+    // One workout day has many exercises
+    @OneToMany(mappedBy = "workoutDay")
+    private List<Exercise> exercises;
+
     // Getters and Setters
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -34,4 +39,7 @@ public class WorkoutDay {
 
     public User getUser() { return user; }
     public void setUser(User user) { this.user = user; }
+
+    public List<Exercise> getExercises() { return exercises; }
+    public void setExercises(List<Exercise> exercises) { this.exercises = exercises; }
 }

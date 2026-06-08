@@ -6,6 +6,8 @@ import com.workout.tracker.model.WorkoutDay;
 import com.workout.tracker.service.ExerciseService;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
+import com.workout.tracker.dto.LastSessionSummary;
+
 
 // REST controller for Exercise endpoints.
 @RestController
@@ -50,5 +52,14 @@ public class ExerciseController {
             @RequestParam Long userId
     ) {
         return exerciseService.getStatsForExercise(name, userId);
+    }
+
+    // GET /api/exercises/last-session?name=Hamstring+Curl&userId=1
+    @GetMapping("/last-session")
+    public LastSessionSummary getLastSession(
+            @RequestParam String name,
+            @RequestParam Long userId
+    ) {
+        return exerciseService.getLastSessionSummary(name, userId);
     }
 }

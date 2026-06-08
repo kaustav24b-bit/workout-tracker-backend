@@ -29,4 +29,21 @@ public interface ExerciseRepository extends JpaRepository<Exercise, Long> {
             @Param("userId") Long userId,
             @Param("startDate") LocalDate startDate
     );
+
+    // Fetch all exercises by name for a specific user on their most recent session
+    @Query("SELECT e FROM Exercise e " +
+            "JOIN e.workoutDay wd " +
+            "WHERE e.name = :name " +
+            "AND wd.user.id = :userId " +
+            "AND wd.date = (" +
+            "  SELECT MAX(wd2.date) FROM WorkoutDay wd2 " +
+            "  JOIN wd2.exercises e2 " +
+            "  WHERE e2.name = :name " +
+            "  AND wd2.user.id = :userId " +
+            "  AND wd2.date < CURRENT_DATE" +
+            ")")
+    List<Exercise> findLastSessionExercises(
+            @Param("name") String name,
+            @Param("userId") Long userId
+    );
 }
