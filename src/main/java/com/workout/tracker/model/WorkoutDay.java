@@ -3,6 +3,7 @@ package com.workout.tracker.model;
 import jakarta.persistence.*;
 import java.time.LocalDate;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 @Entity
 @Table(name = "workout_day")
@@ -24,7 +25,10 @@ public class WorkoutDay {
     private User user;
 
     // One workout day has many exercises
-    @OneToMany(mappedBy = "workoutDay")
+    // Ignore this field when serializing to JSON
+    // It's only used internally for JPQL queries
+    @JsonIgnore
+    @OneToMany(mappedBy = "workoutDay", fetch = FetchType.LAZY)
     private List<Exercise> exercises;
 
     // Getters and Setters
